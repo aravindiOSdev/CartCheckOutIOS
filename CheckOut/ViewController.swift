@@ -8,15 +8,31 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    @IBOutlet weak var bannerCollectionView: UICollectionView!
+    @IBOutlet weak var pageBannerController: UIPageControl!
     var sections:[String] = []
     
     var itemsInSections:[[Item]] = []
     
     var items: [Item] = []
     
+    var banners: [UIImage] = [#imageLiteral(resourceName: "Banner-1"),#imageLiteral(resourceName: "Banner-2"),#imageLiteral(resourceName: "Banner-3"),#imageLiteral(resourceName: "Banner-4")]
     
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return banners.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bannerCell", for: indexPath)
+        
+        return cell
+        
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
