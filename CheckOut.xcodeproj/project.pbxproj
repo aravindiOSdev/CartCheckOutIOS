@@ -16,6 +16,7 @@
 		7B034EF4226A292600B6A483 /* CheckOutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B034EF3226A292600B6A483 /* CheckOutUITests.swift */; };
 		7B034F04226A407500B6A483 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B034F03226A407500B6A483 /* ItemCollectionViewCell.swift */; };
 		7B605FA1226A6F5800B5D95D /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B605FA0226A6F5800B5D95D /* ItemViewCell.swift */; };
+		7B605FE2226BEAC600B5D95D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B605FE1226BEAC600B5D95D /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		7B034EF5226A292600B6A483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B034F03226A407500B6A483 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B605FA0226A6F5800B5D95D /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
+		7B605FE1226BEAC600B5D95D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				7B034ED3226A292500B6A483 /* AppDelegate.swift */,
+				7B605FE1226BEAC600B5D95D /* Item.swift */,
 				7B034ED5226A292600B6A483 /* ViewController.swift */,
 				7B034ED7226A292600B6A483 /* Main.storyboard */,
 				7B034F03226A407500B6A483 /* ItemCollectionViewCell.swift */,
@@ -265,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B605FE2226BEAC600B5D95D /* Item.swift in Sources */,
 				7B034F04226A407500B6A483 /* ItemCollectionViewCell.swift in Sources */,
 				7B034ED6226A292600B6A483 /* ViewController.swift in Sources */,
 				7B034ED4226A292500B6A483 /* AppDelegate.swift in Sources */,
