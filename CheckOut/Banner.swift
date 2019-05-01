@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 class Banner {
+    var itemName: String
     var title: String
-    var subtitle: String
     var image: UIImage
     
-    init(title: String, subtitle: String, image: UIImage) {
+    init(itemName: String, title: String, image: UIImage) {
         self.title = title
-        self.subtitle = subtitle
+        self.itemName = itemName
         self.image = image
 
     }

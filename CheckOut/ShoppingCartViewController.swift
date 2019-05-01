@@ -15,17 +15,21 @@ class ShoppingCartViewController: UIViewController {
     
     @IBOutlet weak var itemTableView: UITableView!
     
+    
     var sections:[String] = []
 
     var itemsInSections:[[Item]] = []
+    
+    var actualItemsInSections:[[Item]] = []
     
     var items: [Item] = []
     
     var cart: [Int: Int] = [:]
     
-    var banners: [UIImage] = [#imageLiteral(resourceName: "Banner-1"),#imageLiteral(resourceName: "Banner-2"),#imageLiteral(resourceName: "Banner-3"),#imageLiteral(resourceName: "Banner-4")]
     
-    var banners2: [Banner] = []
+    var banners: [Banner] = []
+    
+    var thisWidth: CGFloat =  0
     
     
     override func viewDidLoad() {
@@ -36,9 +40,12 @@ class ShoppingCartViewController: UIViewController {
         super.viewWillAppear(animated)
         
         items = getItems()
-        banners2 = getBanners()
+        banners = getBanners()
         
         addItemsToSections(items: items)
+        actualItemsInSections = itemsInSections
+        
+        thisWidth = CGFloat(bannerCollectionView.frame.width)
     }
     
     func getItems() -> [Item]{
@@ -54,10 +61,10 @@ class ShoppingCartViewController: UIViewController {
     }
     
     func getBanners() -> [Banner]{
-        let banner1 = Banner(title: "Banana",subtitle: "Subtitle",image: #imageLiteral(resourceName: "Banner-1"))
-        let banner2 = Banner(title: "Oranges",subtitle: "Fruits",image: #imageLiteral(resourceName: "Banner-2"))
-        let banner3 = Banner(title: "Cucumbers",subtitle: "Fruits",image: #imageLiteral(resourceName: "Banner-3"))
-        let banner4 = Banner(title: "Kiwi",subtitle: "Fruits",image: #imageLiteral(resourceName: "Banner-4"))
+        let banner1 = Banner(itemName: "Banana",title: "Subtitle",image: #imageLiteral(resourceName: "Banner-1"))
+        let banner2 = Banner(itemName: "Oranges",title: "Fruits",image: #imageLiteral(resourceName: "Banner-2"))
+        let banner3 = Banner(itemName: "Cucumbers",title: "Fruits",image: #imageLiteral(resourceName: "Banner-3"))
+        let banner4 = Banner(itemName: "Kiwi",title: "Fruits",image: #imageLiteral(resourceName: "Banner-4"))
         
         return [banner1, banner2, banner3, banner4]
         
@@ -90,6 +97,12 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     
     //Sections
     func numberOfSections(in tableView: UITableView) -> Int {
+        
+
+        //let actualSections = actualItemsInSections.filter({ (items) -> Bool in !items.isEmpty
+        //})
+            
+        
         return sections.count
     }
     
@@ -108,6 +121,7 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
         return headerView
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
         return sections[section]
         
     }
@@ -123,19 +137,18 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     }
     //Rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemsInSections[section].count
+        return actualItemsInSections[section].count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemViewCell
   
-        let item: Item = itemsInSections[indexPath.section][indexPath.row]
+        let item: Item = actualItemsInSections[indexPath.section][indexPath.row]
         print(item.name)
         cell.setItem(item: item)
         
         if let stock = cart[item.id]{
-            print("change stock")
             cell.stock = stock
         }
         
@@ -153,11 +166,23 @@ extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bannerCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bannerCell", for: indexPath) as! ItemCollectionViewCell
+        let banner: Banner = banners[indexPath.row]
+        cell.banner = banner
         
         return cell
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        pageBannerController.currentPage = indexPath.section
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        thisWidth = CGFloat(bannerCollectionView.frame.width)
+        return CGSize(width: thisWidth, height: bannerCollectionView.frame.height)
+    }
+    
 }
 
 extension ShoppingCartViewController: ItemCellDelegate {
@@ -184,7 +209,23 @@ extension ShoppingCartViewController: ItemCellDelegate {
         }
         itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
     }
-    
+}
 
+
+extension ShoppingCartViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else{
+            actualItemsInSections = itemsInSections
+            itemTableView.reloadData()
+            return
+        }
+        for (index, section) in actualItemsInSections.enumerated(){
+            actualItemsInSections[index] = section.filter({ (item) -> Bool in String(item.name).lowercased().contains(searchText.lowercased())
+            })
+            
+        }
+        itemTableView.reloadData()
+    }
 }
 
