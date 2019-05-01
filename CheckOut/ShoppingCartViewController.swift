@@ -13,11 +13,15 @@ class ShoppingCartViewController: UIViewController {
     @IBOutlet weak var bannerCollectionView: UICollectionView!
     @IBOutlet weak var pageBannerController: UIPageControl!
     
-    var sections:[String] = []
+    @IBOutlet weak var itemTableView: UITableView!
     
+    var sections:[String] = []
+
     var itemsInSections:[[Item]] = []
     
     var items: [Item] = []
+    
+    var cart: [Int: Int] = [:]
     
     var banners: [UIImage] = [#imageLiteral(resourceName: "Banner-1"),#imageLiteral(resourceName: "Banner-2"),#imageLiteral(resourceName: "Banner-3"),#imageLiteral(resourceName: "Banner-4")]
     
@@ -38,11 +42,13 @@ class ShoppingCartViewController: UIViewController {
     }
     
     func getItems() -> [Item]{
-        let item1 = Item(name: "Watermelon",type: "Fruits",image: #imageLiteral(resourceName: "Watermelon"), image2: #imageLiteral(resourceName: "Watermelon-2"),price: 30)
-        let item2 = Item(name: "Orange",type: "Fruits",image: #imageLiteral(resourceName: "Grapefruit"), image2: #imageLiteral(resourceName: "Grapefruit-2"), price: 30)
-        let item3 = Item(name: "Kiwi",type: "Fruits",image: #imageLiteral(resourceName: "kiwi"), image2: #imageLiteral(resourceName: "Kiwi-2"),price: 30)
-        let item4 = Item(name: "Avocado",type: "Veggie",image: #imageLiteral(resourceName: "Avocado"), image2: #imageLiteral(resourceName: "Avocado"),price: 30)
-        let item5 = Item(name: "Cucumber",type: "Veggie",image: #imageLiteral(resourceName: "Cucumber"), image2: #imageLiteral(resourceName: "Cucumber"),price: 30)
+        print("hello")
+
+        let item1 = Item(id: 1, name: "Watermelon",type: "Fruits",image: #imageLiteral(resourceName: "Watermelon"), image2: #imageLiteral(resourceName: "Watermelon-2"),price: 30)
+        let item2 = Item(id: 2, name: "Orange",type: "Fruits",image: #imageLiteral(resourceName: "Grapefruit"), image2: #imageLiteral(resourceName: "Grapefruit-2"), price: 30)
+        let item3 = Item(id: 3, name: "Kiwi",type: "Fruits",image: #imageLiteral(resourceName: "kiwi"), image2: #imageLiteral(resourceName: "Kiwi-2"),price: 30)
+        let item4 = Item(id: 4,name: "Avocado",type: "Veggie",image: #imageLiteral(resourceName: "Avocado"), image2: #imageLiteral(resourceName: "Avocado"),price: 30)
+        let item5 = Item(id: 5,name: "Cucumber",type: "Veggie",image: #imageLiteral(resourceName: "Cucumber"), image2: #imageLiteral(resourceName: "Cucumber"),price: 30)
         
         return [item1, item2, item3, item4, item5]
     }
@@ -87,9 +93,33 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
         return sections.count
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //Header White background & Custom Font
+        
+        let myLabel = UILabel()
+        myLabel.frame = CGRect(x: 20, y: 8, width: 320, height: 20)
+        myLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        myLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+        
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.white
+        headerView.addSubview(myLabel)
+        
+        return headerView
+    }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.backgroundView?.backgroundColor = UIColor.white
+            
+                header.textLabel?.textColor = UIColor.black
+        
+
+        }
     }
     //Rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,10 +129,19 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemViewCell
-        cell.textLabel?.text = itemsInSections[indexPath.section][indexPath.row].name
-        cell.detailTextLabel?.text = String( itemsInSections[indexPath.section][indexPath.row].price)
-        cell.imageView?.image = itemsInSections[indexPath.section][indexPath.row].image
-    
+  
+        let item: Item = itemsInSections[indexPath.section][indexPath.row]
+        print(item.name)
+        cell.setItem(item: item)
+        
+        if let stock = cart[item.id]{
+            print("change stock")
+            cell.stock = stock
+        }
+        
+        cell.delegate = self
+        cell.indexPath = indexPath
+        
         return cell
     }
 }
@@ -119,5 +158,33 @@ extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionVi
         return cell
         
     }
+}
+
+extension ShoppingCartViewController: ItemCellDelegate {
+    func didTapAddButton(itemId: Int, indexPath: IndexPath) {
+        cart[itemId] = 1
+        
+        itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+    }
+    
+    func didTapPlusButton(itemId: Int ,indexPath: IndexPath) {
+        if let stock = cart[itemId]{
+            if(stock < 10){
+                cart[itemId] = stock+1
+            }
+        }
+        itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+    }
+    
+    func didTapMinusButton(itemId: Int,indexPath: IndexPath) {
+        if let stock = cart[itemId]{
+            if(stock > 0){
+                cart[itemId] = stock-1
+            }
+        }
+        itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+    }
+    
+
 }
 
