@@ -29,7 +29,6 @@ class ShoppingCartViewController: UIViewController {
     
     var banners: [Banner] = []
     
-    var thisWidth: CGFloat =  0
     
     
     override func viewDidLoad() {
@@ -44,8 +43,6 @@ class ShoppingCartViewController: UIViewController {
         
         addItemsToSections(items: items)
         actualItemsInSections = itemsInSections
-        
-        thisWidth = CGFloat(bannerCollectionView.frame.width)
     }
     
     func getItems() -> [Item]{
@@ -159,7 +156,7 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     }
 }
 
-extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionViewDelegate{
+extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return banners.count
@@ -174,13 +171,8 @@ extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionVi
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        pageBannerController.currentPage = indexPath.section
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        thisWidth = CGFloat(bannerCollectionView.frame.width)
-        return CGSize(width: thisWidth, height: bannerCollectionView.frame.height)
+    return CGSize(width: bannerCollectionView.bounds.width - 10, height: bannerCollectionView.bounds.height)
     }
     
 }
