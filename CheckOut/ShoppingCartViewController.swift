@@ -26,7 +26,10 @@ class ShoppingCartViewController: UIViewController {
     
     var cart: [Int: Int] = [:]
     
+    var itemsSections: [Int: [Item]] = [:]
     
+    var actualItemSections: [Int: [Item]] = [:]
+
     var banners: [Banner] = []
     
     
@@ -41,8 +44,10 @@ class ShoppingCartViewController: UIViewController {
         items = getItems()
         banners = getBanners()
         
-        addItemsToSections(items: items)
-        actualItemsInSections = itemsInSections
+        //addItemsToSections(items: items)
+        //actualItemsInSections = itemsInSections
+        addItemsToSections2(items: items)
+        actualItemSections = itemsSections
     }
     
     func getItems() -> [Item]{
@@ -82,6 +87,26 @@ class ShoppingCartViewController: UIViewController {
         }
     }
     
+    func addItemsToSections2(items: [Item]){
+        for item in items{
+            let type = item.type
+            let index = sections.index(of: type)
+            
+            if (index == nil){
+                itemsSections[sections.count] = [item]
+                sections.append(type)
+            }
+            else
+            {
+                var aux = itemsSections[index!]
+                aux!.append(item)
+                itemsSections[index!] = aux
+            }
+        }
+        print(sections)
+        print(itemsSections)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -100,7 +125,7 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
         //})
             
         
-        return sections.count
+        return actualItemSections.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -134,14 +159,14 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     }
     //Rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return actualItemsInSections[section].count
+        return actualItemSections[section]!.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemViewCell
   
-        let item: Item = actualItemsInSections[indexPath.section][indexPath.row]
+        let item: Item = actualItemSections[indexPath.section]![indexPath.row]
         print(item.name)
         cell.setItem(item: item)
         
@@ -208,12 +233,14 @@ extension ShoppingCartViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else{
-            actualItemsInSections = itemsInSections
+            actualItemSections = itemsSections
             itemTableView.reloadData()
             return
         }
-        for (index, section) in actualItemsInSections.enumerated(){
-            actualItemsInSections[index] = section.filter({ (item) -> Bool in String(item.name).lowercased().contains(searchText.lowercased())
+        
+        
+        for (index, section) in itemsSections {
+            actualItemSections[index] = section.filter({ (item) -> Bool in String(item.name).lowercased().contains(searchText.lowercased())
             })
             
         }
