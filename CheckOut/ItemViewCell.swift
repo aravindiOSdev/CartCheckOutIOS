@@ -17,7 +17,6 @@ protocol ItemCellDelegate{
 
 class ItemViewCell: UITableViewCell {
 
-    
     @IBOutlet weak var itemImage: UIImageView!
     
     @IBOutlet weak var cellTitle: UILabel!
@@ -34,16 +33,14 @@ class ItemViewCell: UITableViewCell {
     
     @IBAction func plusButtonTapped(_ sender: Any) {
         delegate?.didTapPlusButton(itemId: item.id, indexPath: indexPath)
-
     }
     
     @IBAction func minusButtonTapped(_ sender: Any) {
         delegate?.didTapMinusButton(itemId: item.id,indexPath: indexPath)
-
     }
+    
     @IBAction func addButtonTapped(_ sender: Any) {
         delegate?.didTapAddButton(itemId: item.id, indexPath: indexPath)
-        
     }
     
     var delegate: ItemCellDelegate?
@@ -51,6 +48,7 @@ class ItemViewCell: UITableViewCell {
     var item: Item!
     var stock: Int = 0
     var indexPath: IndexPath!
+    var section: Int!
 
     func setItem(item: Item){
         self.item = item

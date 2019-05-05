@@ -16,6 +16,9 @@
 		7B034EF4226A292600B6A483 /* CheckOutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B034EF3226A292600B6A483 /* CheckOutUITests.swift */; };
 		7B034F04226A407500B6A483 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B034F03226A407500B6A483 /* ItemCollectionViewCell.swift */; };
 		7B1194CB227BC9E200C3F198 /* CheckOutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1194CA227BC9E200C3F198 /* CheckOutCollectionViewCell.swift */; };
+		7B1194CD227E155800C3F198 /* CheckoutCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1194CC227E155800C3F198 /* CheckoutCartViewController.swift */; };
+		7B1194D1227E29DD00C3F198 /* CartSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1194D0227E29DD00C3F198 /* CartSingleton.swift */; };
+		7B1194D3227E4AD800C3F198 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1194D2227E4AD800C3F198 /* ModelManager.swift */; };
 		7B3A9AB322713F6000F5C666 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3A9AB222713F6000F5C666 /* Banner.swift */; };
 		7B605FA1226A6F5800B5D95D /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B605FA0226A6F5800B5D95D /* ItemViewCell.swift */; };
 		7B605FE2226BEAC600B5D95D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B605FE1226BEAC600B5D95D /* Item.swift */; };
@@ -54,6 +57,9 @@
 		7B034EF5226A292600B6A483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B034F03226A407500B6A483 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B1194CA227BC9E200C3F198 /* CheckOutCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B1194CC227E155800C3F198 /* CheckoutCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutCartViewController.swift; sourceTree = "<group>"; };
+		7B1194D0227E29DD00C3F198 /* CartSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartSingleton.swift; sourceTree = "<group>"; };
+		7B1194D2227E4AD800C3F198 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		7B3A9AB222713F6000F5C666 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		7B605FA0226A6F5800B5D95D /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
 		7B605FE1226BEAC600B5D95D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -110,6 +116,9 @@
 				7B034ED3226A292500B6A483 /* AppDelegate.swift */,
 				7B605FE1226BEAC600B5D95D /* Item.swift */,
 				7B034ED5226A292600B6A483 /* ShoppingCartViewController.swift */,
+				7B1194CC227E155800C3F198 /* CheckoutCartViewController.swift */,
+				7B1194D0227E29DD00C3F198 /* CartSingleton.swift */,
+				7B1194D2227E4AD800C3F198 /* ModelManager.swift */,
 				7B3A9AB222713F6000F5C666 /* Banner.swift */,
 				7B034ED7226A292600B6A483 /* Main.storyboard */,
 				7B1194CA227BC9E200C3F198 /* CheckOutCollectionViewCell.swift */,
@@ -275,10 +284,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B605FE2226BEAC600B5D95D /* Item.swift in Sources */,
+				7B1194D1227E29DD00C3F198 /* CartSingleton.swift in Sources */,
 				7B034F04226A407500B6A483 /* ItemCollectionViewCell.swift in Sources */,
 				7B034ED6226A292600B6A483 /* ShoppingCartViewController.swift in Sources */,
 				7B034ED4226A292500B6A483 /* AppDelegate.swift in Sources */,
+				7B1194CD227E155800C3F198 /* CheckoutCartViewController.swift in Sources */,
 				7B605FA1226A6F5800B5D95D /* ItemViewCell.swift in Sources */,
+				7B1194D3227E4AD800C3F198 /* ModelManager.swift in Sources */,
 				7B3A9AB322713F6000F5C666 /* Banner.swift in Sources */,
 				7B1194CB227BC9E200C3F198 /* CheckOutCollectionViewCell.swift in Sources */,
 			);

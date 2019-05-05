@@ -15,8 +15,8 @@ class Item {
     var type: String
     var image: UIImage
     var image2: UIImage
-    var price: Int
-    init(id: Int, name: String, type: String, image: UIImage, image2: UIImage, price: Int) {
+    var price: Double
+    init(id: Int, name: String, type: String, image: UIImage, image2: UIImage, price: Double) {
         self.id = id
         self.name = name
         self.type = type

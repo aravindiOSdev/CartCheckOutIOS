@@ -12,99 +12,53 @@ class ShoppingCartViewController: UIViewController {
     
     @IBOutlet weak var bannerCollectionView: UICollectionView!
     @IBOutlet weak var pageBannerController: UIPageControl!
-    
     @IBOutlet weak var itemTableView: UITableView!
     
+    let cart = CartSingleton.cart
+    let data = ModelManager.data
     
     var sections:[String] = []
-
-    var itemsInSections:[[Item]] = []
-    
-    var actualItemsInSections:[[Item]] = []
-    
-    var items: [Item] = []
-    
-    var cart: [Int: Int] = [:]
-    
-    var itemsSections: [Int: [Item]] = [:]
-    
-    var actualItemSections: [Int: [Item]] = [:]
-
-    var banners: [Banner] = []
-    
-    
+    var itemsBySection: [Int: [Item]] = [:]
+    var actualItemsBySection: [Int: [Item]] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        data.fetchItems()
+        data.fetchBanners()
+        addItemsToSections(items: data.items)
+        
+        pageBannerController.currentPage = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        itemTableView.reloadData()
         
-        items = getItems()
-        banners = getBanners()
-        
-        //addItemsToSections(items: items)
-        //actualItemsInSections = itemsInSections
-        addItemsToSections2(items: items)
-        actualItemSections = itemsSections
+        print(cart.value)
     }
     
-    func getItems() -> [Item]{
-        print("hello")
-
-        let item1 = Item(id: 1, name: "Watermelon",type: "Fruits",image: #imageLiteral(resourceName: "Watermelon"), image2: #imageLiteral(resourceName: "Watermelon-2"),price: 30)
-        let item2 = Item(id: 2, name: "Orange",type: "Fruits",image: #imageLiteral(resourceName: "Grapefruit"), image2: #imageLiteral(resourceName: "Grapefruit-2"), price: 30)
-        let item3 = Item(id: 3, name: "Kiwi",type: "Fruits",image: #imageLiteral(resourceName: "kiwi"), image2: #imageLiteral(resourceName: "Kiwi-2"),price: 30)
-        let item4 = Item(id: 4,name: "Avocado",type: "Veggie",image: #imageLiteral(resourceName: "Avocado"), image2: #imageLiteral(resourceName: "Avocado"),price: 30)
-        let item5 = Item(id: 5,name: "Cucumber",type: "Veggie",image: #imageLiteral(resourceName: "Cucumber"), image2: #imageLiteral(resourceName: "Cucumber"),price: 30)
-        
-        return [item1, item2, item3, item4, item5]
+    @IBAction func pageBannerControlledTapped(_ sender: Any) {
+        bannerCollectionView.scrollToItem(at: IndexPath(row: pageBannerController.currentPage, section: 0), at: .right, animated: false)
     }
-    
-    func getBanners() -> [Banner]{
-        let banner1 = Banner(itemName: "Banana",title: "Subtitle",image: #imageLiteral(resourceName: "Banner-1"))
-        let banner2 = Banner(itemName: "Oranges",title: "Fruits",image: #imageLiteral(resourceName: "Banner-2"))
-        let banner3 = Banner(itemName: "Cucumbers",title: "Fruits",image: #imageLiteral(resourceName: "Banner-3"))
-        let banner4 = Banner(itemName: "Kiwi",title: "Fruits",image: #imageLiteral(resourceName: "Banner-4"))
-        
-        return [banner1, banner2, banner3, banner4]
-        
-    }
-    
     func addItemsToSections(items: [Item]){
-        for item in items{
-            let type = item.type
-            let index = sections.index(of: type)
-            if (index == nil){
-                sections.append(type)
-                itemsInSections.append([item])
-            }
-            else
-            {
-                itemsInSections[index!].append(item)
-            }
-        }
-    }
-    
-    func addItemsToSections2(items: [Item]){
         for item in items{
             let type = item.type
             let index = sections.index(of: type)
             
             if (index == nil){
-                itemsSections[sections.count] = [item]
+                itemsBySection[sections.count] = [item]
                 sections.append(type)
             }
             else
             {
-                var aux = itemsSections[index!]
+                var aux = itemsBySection[index!]
                 aux!.append(item)
-                itemsSections[index!] = aux
+                itemsBySection[index!] = aux
             }
         }
-        print(sections)
-        print(itemsSections)
+        actualItemsBySection = itemsBySection
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -119,18 +73,12 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     
     //Sections
     func numberOfSections(in tableView: UITableView) -> Int {
-        
 
-        //let actualSections = actualItemsInSections.filter({ (items) -> Bool in !items.isEmpty
-        //})
-            
-        
-        return actualItemSections.count
+        return actualItemsBySection.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //Header White background & Custom Font
-        
         let myLabel = UILabel()
         myLabel.frame = CGRect(x: 20, y: 8, width: 320, height: 20)
         myLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -159,19 +107,22 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     }
     //Rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return actualItemSections[section]!.count
+        return actualItemsBySection[section]!.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemViewCell
   
-        let item: Item = actualItemSections[indexPath.section]![indexPath.row]
-        print(item.name)
+        let item: Item = actualItemsBySection[indexPath.section]![indexPath.row]
+        
         cell.setItem(item: item)
         
-        if let stock = cart[item.id]{
+        if let stock = cart.value[item.id]{
             cell.stock = stock
+        }
+        else{
+            cell.stock = 0
         }
         
         cell.delegate = self
@@ -184,12 +135,13 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
 extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return banners.count
+        pageBannerController.numberOfPages = data.banners.count
+        return data.banners.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bannerCell", for: indexPath) as! ItemCollectionViewCell
-        let banner: Banner = banners[indexPath.row]
+        let banner: Banner = data.banners[indexPath.row]
         cell.banner = banner
         
         return cell
@@ -202,26 +154,36 @@ extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionVi
     
 }
 
+extension ShoppingCartViewController: UIScrollViewDelegate{
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        pageBannerController.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        pageBannerController.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+    }
+}
+
 extension ShoppingCartViewController: ItemCellDelegate {
     func didTapAddButton(itemId: Int, indexPath: IndexPath) {
-        cart[itemId] = 1
-        
+        cart.change(key: itemId, number: 1)
         itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
     }
     
     func didTapPlusButton(itemId: Int ,indexPath: IndexPath) {
-        if let stock = cart[itemId]{
+        if let stock = cart.value[itemId]{
             if(stock < 10){
-                cart[itemId] = stock+1
+                cart.change(key: itemId, number: stock + 1)
             }
         }
         itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
     }
     
     func didTapMinusButton(itemId: Int,indexPath: IndexPath) {
-        if let stock = cart[itemId]{
+        if let stock = cart.value[itemId]{
             if(stock > 0){
-                cart[itemId] = stock-1
+                cart.change(key: itemId, number: stock - 1)
             }
         }
         itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
@@ -233,16 +195,13 @@ extension ShoppingCartViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else{
-            actualItemSections = itemsSections
+            actualItemsBySection = itemsBySection
             itemTableView.reloadData()
             return
         }
-        
-        
-        for (index, section) in itemsSections {
-            actualItemSections[index] = section.filter({ (item) -> Bool in String(item.name).lowercased().contains(searchText.lowercased())
+        for (index, section) in itemsBySection {
+            actualItemsBySection[index] = section.filter({ (item) -> Bool in String(item.name).lowercased().contains(searchText.lowercased())
             })
-            
         }
         itemTableView.reloadData()
     }
