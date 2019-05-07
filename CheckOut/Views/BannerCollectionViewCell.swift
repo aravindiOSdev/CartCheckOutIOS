@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemCollectionViewCell: UICollectionViewCell {
+class BannerCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var bannerImage: UIImageView!
     @IBOutlet weak var bannerTitle: UILabel!

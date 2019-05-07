@@ -10,12 +10,12 @@ import UIKit
 
 class ShoppingCartViewController: UIViewController {
     
-    @IBOutlet weak var bannerCollectionView: UICollectionView!
-    @IBOutlet weak var pageBannerController: UIPageControl!
-    @IBOutlet weak var itemTableView: UITableView!
+    let cart = CartManager.cart
+    let modelManager = ModelManager.data
     
-    let cart = CartSingleton.cart
-    let data = ModelManager.data
+    @IBOutlet weak var bannerCollectionView: UICollectionView!
+    @IBOutlet weak var bannerPageControl: UIPageControl!
+    @IBOutlet weak var itemTableView: UITableView!
     
     var sections:[String] = []
     var itemsBySection: [Int: [Item]] = [:]
@@ -24,23 +24,22 @@ class ShoppingCartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        data.fetchItems()
-        data.fetchBanners()
-        addItemsToSections(items: data.items)
+        modelManager.fetchItems()
+        modelManager.fetchBanners()
+        addItemsToSections(items: modelManager.items)
         
-        pageBannerController.currentPage = 0
+        bannerPageControl.currentPage = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         itemTableView.reloadData()
-        
-        print(cart.value)
     }
     
     @IBAction func pageBannerControlledTapped(_ sender: Any) {
-        bannerCollectionView.scrollToItem(at: IndexPath(row: pageBannerController.currentPage, section: 0), at: .right, animated: false)
+        bannerCollectionView.scrollToItem(at: IndexPath(row: bannerPageControl.currentPage, section: 0), at: .right, animated: false)
     }
+    
     func addItemsToSections(items: [Item]){
         for item in items{
             let type = item.type
@@ -60,13 +59,6 @@ class ShoppingCartViewController: UIViewController {
         actualItemsBySection = itemsBySection
 
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
 extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate{
@@ -79,14 +71,14 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //Header White background & Custom Font
-        let myLabel = UILabel()
-        myLabel.frame = CGRect(x: 20, y: 8, width: 320, height: 20)
-        myLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        myLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+        let headerLabel = UILabel()
+        headerLabel.frame = CGRect(x: 20, y: 8, width: 320, height: 20)
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
         
         let headerView = UIView()
         headerView.backgroundColor = UIColor.white
-        headerView.addSubview(myLabel)
+        headerView.addSubview(headerLabel)
         
         return headerView
     }
@@ -99,12 +91,10 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let header = view as? UITableViewHeaderFooterView {
             header.backgroundView?.backgroundColor = UIColor.white
-            
                 header.textLabel?.textColor = UIColor.black
-        
-
         }
     }
+    
     //Rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return actualItemsBySection[section]!.count
@@ -112,7 +102,7 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemShoppingCartCell
   
         let item: Item = actualItemsBySection[indexPath.section]![indexPath.row]
         
@@ -127,7 +117,6 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
         
         cell.delegate = self
         cell.indexPath = indexPath
-        
         return cell
     }
 }
@@ -135,13 +124,13 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
 extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        pageBannerController.numberOfPages = data.banners.count
-        return data.banners.count
+        bannerPageControl.numberOfPages = modelManager.banners.count
+        return modelManager.banners.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bannerCell", for: indexPath) as! ItemCollectionViewCell
-        let banner: Banner = data.banners[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bannerCell", for: indexPath) as! BannerCollectionViewCell
+        let banner: Banner = modelManager.banners[indexPath.row]
         cell.banner = banner
         
         return cell
@@ -157,15 +146,15 @@ extension ShoppingCartViewController: UICollectionViewDataSource, UICollectionVi
 extension ShoppingCartViewController: UIScrollViewDelegate{
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        pageBannerController.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        bannerPageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        pageBannerController.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        bannerPageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
     }
 }
 
-extension ShoppingCartViewController: ItemCellDelegate {
+extension ShoppingCartViewController: ItemCheckoutCellDelegate {
     func didTapAddButton(itemId: Int, indexPath: IndexPath) {
         cart.change(key: itemId, number: 1)
         itemTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)

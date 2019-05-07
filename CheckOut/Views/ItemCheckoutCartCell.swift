@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckOutCollectionViewCell: UICollectionViewCell {
+class ItemCheckoutCartCell: UICollectionViewCell {
     
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var itemName: UILabel!
@@ -17,7 +17,7 @@ class CheckOutCollectionViewCell: UICollectionViewCell {
     
     var item: Item!
     
-    let cart = CartSingleton.cart;
+    let cart = CartManager.cart;
     
     func setItem(item: Item){
         self.item = item

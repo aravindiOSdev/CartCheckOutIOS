@@ -8,6 +8,9 @@
 
 import Foundation
 
+/*
+    ModelManager is responsible of get, save, and share the data that should be obtained from an api
+ */
 class ModelManager{
     
     static let data = ModelManager()
@@ -17,7 +20,6 @@ class ModelManager{
     var banners: [Banner] = []
     
     private init(){
-        print("Im Born")
     }
     
     func fetchItems()

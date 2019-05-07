@@ -12,8 +12,8 @@ class CheckoutCartViewController: UIViewController {
 
     @IBOutlet weak var cartCollectionView: UICollectionView!
 
-    let cart = CartSingleton.cart
-    let data = ModelManager.data
+    let cart = CartManager.cart
+    let modelManager = ModelManager.data
     let pickerData = [1,2,3,4,5,6,7,8,9,10]
     
     var toolBar = UIToolbar()
@@ -60,28 +60,11 @@ class CheckoutCartViewController: UIViewController {
     func refreshAmount(){
         var totalAmount: Double = 0
         for (itemId, qty) in cart.value{
-            let lineAmount = Double(qty) * data.itemsById[itemId]!.price
+            let lineAmount = Double(qty) * modelManager.itemsById[itemId]!.price
             totalAmount += lineAmount
         }
         totalAmountLabel.text = "$" + String(totalAmount)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension CheckoutCartViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
@@ -91,9 +74,9 @@ extension CheckoutCartViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCollectionCell", for: indexPath) as! CheckOutCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCollectionCell", for: indexPath) as! ItemCheckoutCartCell
         let itemId = Array(cart.value.keys)[indexPath.row]
-        let item: Item = data.itemsById[itemId]!
+        let item: Item = modelManager.itemsById[itemId]!
         cell.setItem(item: item)
 
         return cell
@@ -108,7 +91,7 @@ extension CheckoutCartViewController: UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let cell = cartCollectionView.cellForItem(at: indexPath) as! CheckOutCollectionViewCell
+        let cell = cartCollectionView.cellForItem(at: indexPath) as! ItemCheckoutCartCell
         selectedItemId = cell.item.id
         let qty = cart.value[cell.item.id]
         let index = pickerData.index(of: qty!)

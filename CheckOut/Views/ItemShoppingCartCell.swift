@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol ItemCellDelegate{
+protocol ItemCheckoutCellDelegate{
     
     func didTapPlusButton(itemId: Int, indexPath: IndexPath)
     func didTapMinusButton(itemId: Int ,indexPath: IndexPath)
     func didTapAddButton(itemId: Int, indexPath: IndexPath)
 }
 
-class ItemViewCell: UITableViewCell {
+class ItemShoppingCartCell: UITableViewCell {
 
     @IBOutlet weak var itemImage: UIImageView!
     
@@ -43,7 +43,7 @@ class ItemViewCell: UITableViewCell {
         delegate?.didTapAddButton(itemId: item.id, indexPath: indexPath)
     }
     
-    var delegate: ItemCellDelegate?
+    var delegate: ItemCheckoutCellDelegate?
 
     var item: Item!
     var stock: Int = 0
