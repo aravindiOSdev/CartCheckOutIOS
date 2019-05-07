@@ -36,10 +36,6 @@ class ShoppingCartViewController: UIViewController {
         itemTableView.reloadData()
     }
     
-    @IBAction func pageBannerControlledTapped(_ sender: Any) {
-        bannerCollectionView.scrollToItem(at: IndexPath(row: bannerPageControl.currentPage, section: 0), at: .right, animated: false)
-    }
-    
     func addItemsToSections(items: [Item]){
         for item in items{
             let type = item.type
