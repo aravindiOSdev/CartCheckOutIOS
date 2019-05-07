@@ -36,7 +36,12 @@ class CheckoutCartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refreshAmount()
-        
+        if(cart.value.isEmpty){
+            checkoutButton.isEnabled = false
+        }
+        else{
+            checkoutButton.isEnabled = true
+        }
     }
     
     @IBAction func checkoutButtonTapped(_ sender: Any) {
