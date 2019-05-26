@@ -1,27 +1,37 @@
 //
-//  Item.swift
+//  ItemNew.swift
 //  CheckOut
 //
-//  Created by SCIS on 4/20/19.
+//  Created by SCIS on 5/22/19.
 //  Copyright © 2019 Jartola. All rights reserved.
 //
 
 import Foundation
 import UIKit
+import ObjectMapper
 
-class Item {
-    var id: Int
-    var name: String
-    var type: String
-    var image: UIImage
-    var image2: UIImage
-    var price: Double
-    init(id: Int, name: String, type: String, image: UIImage, image2: UIImage, price: Double) {
-        self.id = id
-        self.name = name
-        self.type = type
-        self.image = image
-        self.image2 = image2
-        self.price = price
+
+class Item: Mappable{
+    
+    var id: Int?
+    var name: String?
+    var category: String?
+    var photoUrl: String?
+    var price: Double?
+    var image: UIImage?
+    
+    required convenience init?(map: Map) {
+        self.init()
     }
+    
+    func mapping(map: Map) {
+        id <- map["id"]
+        name <- map["name"]
+        category <- map["category"]
+        photoUrl <- map["photoUrl"]
+        price <- map["price"]
+    }
+    
+    
+
 }

@@ -2,22 +2,32 @@
 //  Banner.swift
 //  CheckOut
 //
-//  Created by SCIS on 4/24/19.
+//  Created by SCIS on 5/25/19.
 //  Copyright © 2019 Jartola. All rights reserved.
 //
 
 import Foundation
 import UIKit
+import ObjectMapper
 
-class Banner {
-    var itemName: String
-    var title: String
-    var image: UIImage
+
+class Banner: Mappable{
     
-    init(itemName: String, title: String, image: UIImage) {
-        self.title = title
-        self.itemName = itemName
-        self.image = image
-
+    var name: String?
+    var description: String?
+    var photoUrl: String?
+    
+    required convenience init?(map: Map) {
+        self.init()
     }
+    
+    func mapping(map: Map) {
+        name <- map["name"]
+        description <- map["description"]
+        photoUrl <- map["photoUrl"]
+    }
+    
+    
+    
 }
+

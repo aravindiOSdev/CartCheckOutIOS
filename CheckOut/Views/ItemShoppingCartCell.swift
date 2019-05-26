@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol ItemCheckoutCellDelegate{
     
@@ -16,7 +17,7 @@ protocol ItemCheckoutCellDelegate{
 }
 
 class ItemShoppingCartCell: UITableViewCell {
-
+    
     @IBOutlet weak var itemImage: UIImageView!
     
     @IBOutlet weak var cellTitle: UILabel!
@@ -32,26 +33,27 @@ class ItemShoppingCartCell: UITableViewCell {
     @IBOutlet weak var labelQty: UILabel!
     
     @IBAction func plusButtonTapped(_ sender: Any) {
-        delegate?.didTapPlusButton(itemId: item.id, indexPath: indexPath)
+        delegate?.didTapPlusButton(itemId: item.id!, indexPath: indexPath)
     }
     
     @IBAction func minusButtonTapped(_ sender: Any) {
-        delegate?.didTapMinusButton(itemId: item.id,indexPath: indexPath)
+        delegate?.didTapMinusButton(itemId: item.id!,indexPath: indexPath)
     }
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        delegate?.didTapAddButton(itemId: item.id, indexPath: indexPath)
+        delegate?.didTapAddButton(itemId: item.id!, indexPath: indexPath)
     }
     
     var delegate: ItemCheckoutCellDelegate?
-
     var item: Item!
     var stock: Int = 0
     var indexPath: IndexPath!
     var section: Int!
+    let defaultImage: UIImage = #imageLiteral(resourceName: "image")
 
-    func setItem(item: Item){
+    func setItemNew(item: Item){
         self.item = item
+        self.setImage(urlString: item.photoUrl ?? "")
     }
     
     func setStock(stock: Int){
@@ -65,9 +67,9 @@ class ItemShoppingCartCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.itemImage.image = item.image
+        self.setImage(urlString: item.photoUrl ?? "")
         self.cellTitle.text = item.name
-        self.cellSubtitle.text = "$"+String(item.price)
+        self.cellSubtitle.text = "$"+String(item.price!)
         
         if(stock==0){
             itemQtyContainer.isHidden = true
@@ -93,13 +95,28 @@ class ItemShoppingCartCell: UITableViewCell {
         
         itemQtyContainer.layer.borderWidth = 0.5
         itemQtyContainer.layer.borderColor = UIColor.lightGray.cgColor
-
+        
         addButton.backgroundColor = UIColor.white
         addButton.tintColor = UIColor.purple
         
         
     }
+    
+    func setImage(urlString: String){
+        
+        let url = URL(string: urlString)
+        itemImage.kf.indicatorType = .activity
+        itemImage.kf.setImage(
+            with: url,
+            placeholder: defaultImage,
+            options: [
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ])
 
+    }
+  
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

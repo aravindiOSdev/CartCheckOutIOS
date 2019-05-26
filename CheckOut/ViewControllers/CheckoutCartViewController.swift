@@ -60,7 +60,7 @@ class CheckoutCartViewController: UIViewController {
     func refreshAmount(){
         var totalAmount: Double = 0
         for (itemId, qty) in cart.value{
-            let lineAmount = Double(qty) * modelManager.itemsById[itemId]!.price
+            let lineAmount = Double(qty) * modelManager.itemsById[itemId]!.price!
             totalAmount += lineAmount
         }
         totalAmountLabel.text = "$" + String(totalAmount)
@@ -92,8 +92,8 @@ extension CheckoutCartViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let cell = cartCollectionView.cellForItem(at: indexPath) as! ItemCheckoutCartCell
-        selectedItemId = cell.item.id
-        let qty = cart.value[cell.item.id]
+        selectedItemId = cell.item.id!
+        let qty = cart.value[selectedItemId]
         let index = pickerData.index(of: qty!)
         
         qtyPicker.selectRow(index!, inComponent: 0, animated: false)

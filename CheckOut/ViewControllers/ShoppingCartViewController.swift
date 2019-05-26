@@ -20,13 +20,20 @@ class ShoppingCartViewController: UIViewController {
     var sections:[String] = []
     var itemsBySection: [Int: [Item]] = [:]
     var actualItemsBySection: [Int: [Item]] = [:]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        modelManager.fetchItems()
-        modelManager.fetchBanners()
-        addItemsToSections(items: modelManager.items)
+        modelManager.fetchAllItems { (items, error) in
+            self.addItemsToSectionsNew(items: items ?? [])
+            self.itemTableView.reloadData()
+        }
+        
+        modelManager.fetchAllBanners { (banners, error) in
+            print(banners![0].name!)
+            self.bannerCollectionView.reloadData()
+            
+        }
         
         bannerPageControl.currentPage = 0
     }
@@ -36,24 +43,24 @@ class ShoppingCartViewController: UIViewController {
         itemTableView.reloadData()
     }
     
-    func addItemsToSections(items: [Item]){
+    func addItemsToSectionsNew(items: [Item]){
         for item in items{
-            let type = item.type
-            let index = sections.index(of: type)
-            
-            if (index == nil){
-                itemsBySection[sections.count] = [item]
-                sections.append(type)
-            }
-            else
-            {
-                var aux = itemsBySection[index!]
-                aux!.append(item)
-                itemsBySection[index!] = aux
-            }
+        let type = item.category!.uppercased()
+        let index = sections.index(of: type)
+    
+        if (index == nil){
+            itemsBySection[sections.count] = [item]
+            sections.append(type)
+        }
+        else
+        {
+            var aux = itemsBySection[index!]
+            aux!.append(item)
+            itemsBySection[index!] = aux
+        }
         }
         actualItemsBySection = itemsBySection
-
+    
     }
 }
 
@@ -93,6 +100,7 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     
     //Rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return actualItemsBySection[section]!.count
         
     }
@@ -100,11 +108,12 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemShoppingCartCell
   
-        let item: Item = actualItemsBySection[indexPath.section]![indexPath.row]
+        //let item: Item = actualItemsBySection[indexPath.section]![indexPath.row]
+        let itemNew: Item = actualItemsBySection[indexPath.section]![indexPath.row]
+        //cell.setItem(item: item)
+        cell.setItemNew(item: itemNew)
         
-        cell.setItem(item: item)
-        
-        if let stock = cart.value[item.id]{
+        if let stock = cart.value[itemNew.id!]{
             cell.stock = stock
         }
         else{
@@ -185,7 +194,7 @@ extension ShoppingCartViewController: UISearchBarDelegate {
             return
         }
         for (index, section) in itemsBySection {
-            actualItemsBySection[index] = section.filter({ (item) -> Bool in String(item.name).lowercased().contains(searchText.lowercased())
+            actualItemsBySection[index] = section.filter({ (item) -> Bool in String(item.name!).lowercased().contains(searchText.lowercased())
             })
         }
         itemTableView.reloadData()

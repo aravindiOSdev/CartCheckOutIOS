@@ -20,12 +20,25 @@ class BannerCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         
         
-        self.bannerImage.image = banner.image
-        self.bannerTitle.text = banner.title
-        self.bannerItemName.text = banner.itemName
+        self.setImage(urlString: banner.photoUrl ?? "")
+        self.bannerTitle.text = banner.description
+        self.bannerItemName.text = banner.name
         
     }
-    
+    func setImage(urlString: String){
+        
+        let url = URL(string: urlString)
+        bannerImage.kf.indicatorType = .activity
+        bannerImage.kf.setImage(
+            with: url,
+            placeholder: #imageLiteral(resourceName: "image"),
+            options: [
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ])
+        
+    }
     
     
     
