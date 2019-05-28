@@ -12,13 +12,16 @@ class CheckoutCartViewController: UIViewController {
 
     @IBOutlet weak var cartCollectionView: UICollectionView!
 
-    let cart = CartManager.cart
+    var cartManager = CartManager.cart
     let modelManager = ModelManager.data
     let pickerData = [1,2,3,4,5,6,7,8,9,10]
     
     var toolBar = UIToolbar()
     var selectedItemId: Int = -1
     var qtyPickerSelected: Int?
+    var readOnly = false
+    var purchaseCart: [Int:Int] = [:]
+    var cart: [Int:Int] = [:]
     
     @IBOutlet weak var totalAmountLabel: UILabel!
     @IBOutlet weak var checkoutButton: UIButton!
@@ -35,13 +38,24 @@ class CheckoutCartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        refreshAmount()
-        if(cart.value.isEmpty){
+        if(readOnly){
+            checkoutButton.isHidden = true
+        }
+        else if(cartManager.value.isEmpty){
             checkoutButton.isEnabled = false
         }
         else{
             checkoutButton.isEnabled = true
         }
+        print(readOnly)
+        print(purchaseCart)
+        if (readOnly){
+            cart = purchaseCart
+        }
+        else{
+            cart = cartManager.value
+        }
+        refreshAmount()
     }
     
     @IBAction func checkoutButtonTapped(_ sender: Any) {
@@ -53,13 +67,13 @@ class CheckoutCartViewController: UIViewController {
     }
     
     func checkoutDone(alert: UIAlertAction){
-        cart.clean()
+        cartManager.clean()
         self.navigationController!.popViewController(animated: true)
     }
     
     func refreshAmount(){
         var totalAmount: Double = 0
-        for (itemId, qty) in cart.value{
+        for (itemId, qty) in cart{
             let lineAmount = Double(qty) * modelManager.itemsById[itemId]!.price!
             totalAmount += lineAmount
         }
@@ -70,14 +84,14 @@ class CheckoutCartViewController: UIViewController {
 extension CheckoutCartViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cart.value.count
+        return cart.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCollectionCell", for: indexPath) as! ItemCheckoutCartCell
-        let itemId = Array(cart.value.keys)[indexPath.row]
+        let itemId = Array(cart.keys)[indexPath.row]
         let item: Item = modelManager.itemsById[itemId]!
-        cell.setItem(item: item)
+        cell.setItem(item: item, qty: cart[itemId]!)
 
         return cell
         
@@ -90,10 +104,13 @@ extension CheckoutCartViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (readOnly == true){
+            return
+        }
         
         let cell = cartCollectionView.cellForItem(at: indexPath) as! ItemCheckoutCartCell
         selectedItemId = cell.item.id!
-        let qty = cart.value[selectedItemId]
+        let qty = cart[selectedItemId]
         let index = pickerData.index(of: qty!)
         
         qtyPicker.selectRow(index!, inComponent: 0, animated: false)
@@ -114,7 +131,8 @@ extension CheckoutCartViewController: UICollectionViewDataSource, UICollectionVi
         qtyPicker.isHidden = true
         toolBar.removeFromSuperview()
         
-        cart.value[selectedItemId] = qtyPickerSelected
+        cartManager.value[selectedItemId] = qtyPickerSelected
+        cart[selectedItemId] = qtyPickerSelected
         
         cartCollectionView.reloadData()
         refreshAmount()

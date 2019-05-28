@@ -13,7 +13,7 @@ import ObjectMapper
 
 class Purchase: Mappable{
     
-    var date: String?
+    var date: Date?
     var purchaseLines: [PurchaseLine]?
     
     required convenience init?(map: Map) {
@@ -21,8 +21,26 @@ class Purchase: Mappable{
     }
     
     func mapping(map: Map) {
-        date <- map["date"]
+        
+        /*let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        
+        if let dateString = map["date"].currentValue as? String,
+            
+            let _date = dateFormatter.date(from: dateString) {
+            date = _date
+        }*/
+        date <- (map["date"], CustomDateTransform())
         purchaseLines <- map["products"]
+    }
+    
+    func convertToCart() -> [Int:Int]
+    {
+        var cart: [Int:Int] = [:]
+        for purchaseLine in purchaseLines ?? []{
+            cart[purchaseLine.item!.id!] = purchaseLine.qty
+        }
+        return cart
     }
     
 }

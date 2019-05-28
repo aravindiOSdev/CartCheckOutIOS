@@ -16,26 +16,26 @@ class ItemCheckoutCartCell: UICollectionViewCell {
     @IBOutlet weak var itemQty: UILabel!
     
     var item: Item!
-    let cart = CartManager.cart;
+    let cart = CartManager.cart
+    var qty: Int!
     
-    func setItem(item: Item){
+    func setItem(item: Item, qty: Int){
+        self.qty = qty
         self.item = item
-        let qty = cart.value[item.id!]
         self.itemImage.clipsToBounds = true
         self.itemName.text = item.name
         self.itemPrice.text = "$"+String(item.price!)
-        self.itemQty.text = String(qty!)+" units"
+        self.itemQty.text = String(qty)+" units"
     }
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let qty = cart.value[item.id!]
         self.setImage(urlString: item.photoUrl ?? "")
         self.itemImage.layer.cornerRadius = 5
         self.itemImage.clipsToBounds = true
         self.itemName.text = item.name
         self.itemPrice.text = "$"+String(item.price!)
-        self.itemQty.text = String(qty!)+" units"
+        self.itemQty.text = String(qty)+" units"
         
         
     }
