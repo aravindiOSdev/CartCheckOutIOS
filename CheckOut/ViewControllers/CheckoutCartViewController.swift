@@ -38,6 +38,12 @@ class CheckoutCartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        modelManager.postPurchase{ (purchase, error) in
+            print(purchase)
+            print(purchase)
+            
+        }
         if(readOnly){
             checkoutButton.isHidden = true
         }

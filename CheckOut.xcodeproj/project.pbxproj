@@ -33,6 +33,7 @@
 		7B9BB11E229ADCE100AF6747 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BB11D229ADCE100AF6747 /* Purchase.swift */; };
 		7B9BB122229AE76200AF6747 /* PurchaseLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BB121229AE76200AF6747 /* PurchaseLine.swift */; };
 		7B9BB124229CA06F00AF6747 /* CustomDateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BB123229CA06F00AF6747 /* CustomDateTransform.swift */; };
+		7B9BB128229E076F00AF6747 /* PurchaseLinePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BB127229E076F00AF6747 /* PurchaseLinePost.swift */; };
 		99306826B8A736FD2711BC21 /* Pods_CheckOut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6E7E0CB23691774A88CE5E9 /* Pods_CheckOut.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		7B9BB11D229ADCE100AF6747 /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
 		7B9BB121229AE76200AF6747 /* PurchaseLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseLine.swift; sourceTree = "<group>"; };
 		7B9BB123229CA06F00AF6747 /* CustomDateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateTransform.swift; sourceTree = "<group>"; };
+		7B9BB127229E076F00AF6747 /* PurchaseLinePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseLinePost.swift; sourceTree = "<group>"; };
 		A243943771972D3454FBA143 /* Pods-CheckOutTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckOutTests.debug.xcconfig"; path = "Target Support Files/Pods-CheckOutTests/Pods-CheckOutTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3265EC1FBEF5F0819C951AC /* Pods-CheckOutTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckOutTests.release.xcconfig"; path = "Target Support Files/Pods-CheckOutTests/Pods-CheckOutTests.release.xcconfig"; sourceTree = "<group>"; };
 		C3AF92ABF234BB73FFF7742B /* Pods-CheckOutUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckOutUITests.release.xcconfig"; path = "Target Support Files/Pods-CheckOutUITests/Pods-CheckOutUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				7B9BB1132299F92600AF6747 /* Banner.swift */,
 				7B9BB11D229ADCE100AF6747 /* Purchase.swift */,
 				7B9BB121229AE76200AF6747 /* PurchaseLine.swift */,
+				7B9BB127229E076F00AF6747 /* PurchaseLinePost.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 			files = (
 				7B1194D1227E29DD00C3F198 /* CartManager.swift in Sources */,
 				7B034F04226A407500B6A483 /* BannerCollectionViewCell.swift in Sources */,
+				7B9BB128229E076F00AF6747 /* PurchaseLinePost.swift in Sources */,
 				7B034ED6226A292600B6A483 /* ShoppingCartViewController.swift in Sources */,
 				7B034ED4226A292500B6A483 /* AppDelegate.swift in Sources */,
 				7B9BB1122299F72200AF6747 /* BannerOld.swift in Sources */,

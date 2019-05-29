@@ -28,4 +28,13 @@ class CartManager{
     func clean(){
         self.value = [:]
     }
+    
+    func toPurchaseLinePost() -> [PurchaseLinePost]{
+        var lines: [PurchaseLinePost] = []
+        for (item) in value {
+            let line = PurchaseLinePost(itemId: item.key)
+            lines.append(line)
+        }
+        return lines
+    }
 }

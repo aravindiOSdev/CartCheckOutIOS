@@ -22,7 +22,7 @@ class ModelManager{
     var banners: [Banner] = []
     var items: [Item] = []
     var token: String?
-    let fakeToken = "9E53496E-157C-4BB2-A49C-FBA77C5675DF"
+    let fakeToken = "9E53496E-157C-4BB2-A49C-FBA77C5675D6"
     
     private init(){
         AuthenticationManager.shared.authenticate { (authResponse) in
@@ -96,6 +96,38 @@ class ModelManager{
                 }
         }
     }
+    
+    func postPurchase(completion: @escaping (String?, Error?) -> Void) {
+        let url = URL(string: baseUrl + "/checkout")!
+        if self.token == nil {
+            let errorTemp = NSError(domain:"", code: -1, userInfo:nil)
+            
+            completion(nil, errorTemp);
+            return
+        }
+        var params = Parameters()
+        params.updateValue(CartManager.cart.toPurchaseLinePost().toJSON(), forKey: "cart")
+        let headers: HTTPHeaders = ["Authorization": "Bearer " + self.fakeToken]
+        
+        Alamofire.request(url, method: .post, parameters: params,encoding: JSONEncoding.default, headers: headers).responseString {
+            response in
+            switch response.result {
+            case .success:
+                print(response.value)
+                
+                break
+            case .failure(let error):
+                
+                print(error)
+            }
+        }
+        
+    }
+
+    
+    
+    
+    
 
 
     private func addItemsById(items: [Item]){
