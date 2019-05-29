@@ -22,6 +22,31 @@ class CheckoutCartViewController: UIViewController {
     var readOnly = false
     var purchaseCart: [Int:Int] = [:]
     var cart: [Int:Int] = [:]
+    var vSpinner : UIView?
+    
+
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init()
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            self.vSpinner?.removeFromSuperview()
+            self.vSpinner = nil
+        }
+    }
+
     
     @IBOutlet weak var totalAmountLabel: UILabel!
     @IBOutlet weak var checkoutButton: UIButton!
@@ -60,10 +85,19 @@ class CheckoutCartViewController: UIViewController {
     }
     
     @IBAction func checkoutButtonTapped(_ sender: Any) {
-        
-        modelManager.postPurchase(){ (okMessage, error) in
-            if let okMessage = okMessage {
-                let alert = UIAlertController(title: "Susccesfuly Checkout", message: okMessage, preferredStyle: .alert)
+        showSpinner(onView: self.view)
+        modelManager.postPurchase(){ (message, error) in
+            if (error != nil){
+                self.removeSpinner()
+                let alert = UIAlertController(title: "Something go wrong", message: "Please try again later", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+                return
+            }
+            if let message = message {
+                self.removeSpinner()
+                let alert = UIAlertController(title: "Susccesfuly Checkout", message: message, preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: self.checkoutDone)
                 alert.addAction(action)
                 self.present(alert, animated: true)

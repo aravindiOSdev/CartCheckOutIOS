@@ -23,18 +23,7 @@ class ShoppingCartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        modelManager.fetchAllItems { (items, error) in
-            self.addItemsToSectionsNew(items: items ?? [])
-            self.itemTableView.reloadData()
-        }
-        
-        modelManager.fetchAllBanners { (banners, error) in
-            print(banners![0].name!)
-            self.bannerCollectionView.reloadData()
-            
-        }
-        
+        handleFetchData(alert: UIAlertAction())
         bannerPageControl.currentPage = 0
     }
     
@@ -42,6 +31,26 @@ class ShoppingCartViewController: UIViewController {
         super.viewWillAppear(animated)
         itemTableView.reloadData()
     }
+    
+    func handleFetchData(alert: UIAlertAction){
+        //If banners can't be obtained do not worry
+        modelManager.fetchAllBanners {(banners, error) in
+            self.bannerCollectionView.reloadData()
+        }
+        //If items can't be obtained, re-try until you can
+        modelManager.fetchAllItems { (items, error) in
+            if (error != nil){
+                let alert = UIAlertController(title: "We could not conect to the server", message: "Are you Online?", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Re-try", style: .default, handler: self.handleFetchData)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+                return
+                }
+            self.addItemsToSectionsNew(items: items ?? [])
+            self.itemTableView.reloadData()
+        }
+    }
+    
     
     func addItemsToSectionsNew(items: [Item]){
         for item in items{

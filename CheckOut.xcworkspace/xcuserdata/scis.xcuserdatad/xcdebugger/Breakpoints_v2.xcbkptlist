@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/ViewControllers/ShoppingCartViewController.swift"
-            timestampString = "580793392.863463"
+            timestampString = "580799363.093702"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/ViewControllers/ShoppingCartViewController.swift"
-            timestampString = "580793392.863562"
+            timestampString = "580799363.0938489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/ViewControllers/PurchaseHistoryViewController.swift"
-            timestampString = "580793392.86365"
+            timestampString = "580799363.094035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580793392.863759"
+            timestampString = "580799363.09422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127">
+            startingLineNumber = "122"
+            endingLineNumber = "122">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -72,11 +72,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580793392.86385"
+            timestampString = "580799363.094362"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127">
+            startingLineNumber = "122"
+            endingLineNumber = "122">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -86,11 +86,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580793392.863939"
+            timestampString = "580799363.094578"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127">
+            startingLineNumber = "122"
+            endingLineNumber = "122">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580793392.86402"
+            timestampString = "580799363.0946929"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127">
+            startingLineNumber = "122"
+            endingLineNumber = "122">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

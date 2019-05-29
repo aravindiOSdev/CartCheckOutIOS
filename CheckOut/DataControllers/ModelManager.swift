@@ -53,15 +53,10 @@ class ModelManager{
                 switch response.result {
                 case .success:
                     self.banners = response.result.value ?? []
-                    self.addItemsById(items: self.items)
-                    for banner in self.banners {
-                        print(banner.name ?? "")
-                    }
-                    
                     completion(response.value, nil)
+                
                 case .failure(let error):
                     completion(nil, error)
-                    print("fail")
                 }
         }
     }
