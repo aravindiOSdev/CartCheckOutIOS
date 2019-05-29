@@ -13,7 +13,7 @@ import Foundation
  */
 class CartManager{
     
-    static let cart = CartManager()
+    static let shared = CartManager()
     
     var value: [Int: Int] = [:]
     

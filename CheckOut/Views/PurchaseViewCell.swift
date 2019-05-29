@@ -25,17 +25,14 @@ class PurchaseViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         let formatter = DateFormatter()
-        // initially set the format based on your datepicker date / server String
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let myDateString = formatter.string(from: purchase.date!) // string purpose I add here
-        purchaseDateLabel.text = myDateString
-        purchaseTotalAmountLabel.text = "$100"
-        
+
+        purchaseDateLabel.text = formatter.string(from: purchase.date!)
+        purchaseTotalAmountLabel.text = "$"+String(purchase.amount())
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         // Configure the view for the selected state
     }
     

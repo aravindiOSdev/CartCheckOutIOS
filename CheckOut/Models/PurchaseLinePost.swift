@@ -19,7 +19,7 @@ class PurchaseLinePost: Mappable{
     
     init(itemId: Int){
         self.itemId = itemId
-        self.qty = CartManager.cart.value[itemId]
+        self.qty = CartManager.shared.value[itemId]
     }
     
     func mapping(map: Map) {

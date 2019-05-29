@@ -16,7 +16,7 @@ class ItemCheckoutCartCell: UICollectionViewCell {
     @IBOutlet weak var itemQty: UILabel!
     
     var item: Item!
-    let cart = CartManager.cart
+    let cart = CartManager.shared
     var qty: Int!
     
     func setItem(item: Item, qty: Int){

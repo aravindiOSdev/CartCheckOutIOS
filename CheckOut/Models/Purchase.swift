@@ -34,8 +34,7 @@ class Purchase: Mappable{
         purchaseLines <- map["products"]
     }
     
-    func convertToCart() -> [Int:Int]
-    {
+    func convertToCart() -> [Int:Int]{
         var cart: [Int:Int] = [:]
         for purchaseLine in purchaseLines ?? []{
             cart[purchaseLine.item!.id!] = purchaseLine.qty
@@ -43,4 +42,12 @@ class Purchase: Mappable{
         return cart
     }
     
+    func amount() -> Double{
+        var total: Double  = 0
+        for purchaseLine in purchaseLines ?? []{
+            let lineAmount = purchaseLine.item!.price! * Double(purchaseLine.qty!)
+            total += lineAmount
+        }
+        return total
+    }
 }

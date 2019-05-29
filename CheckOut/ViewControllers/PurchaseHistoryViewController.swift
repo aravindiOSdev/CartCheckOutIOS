@@ -11,7 +11,7 @@ import UIKit
 class PurchaseHistoryViewController: UIViewController {
 
     @IBOutlet weak var purchaseTableView: UITableView!
-    let modelManager = ModelManager.data
+    let modelManager = ModelManager.shared
     var purchases: [Purchase] = []
     var selectedPurchase: Purchase?
     

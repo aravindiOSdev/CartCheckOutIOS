@@ -12,8 +12,8 @@ class CheckoutCartViewController: UIViewController {
 
     @IBOutlet weak var cartCollectionView: UICollectionView!
 
-    var cartManager = CartManager.cart
-    let modelManager = ModelManager.data
+    var cartManager = CartManager.shared
+    let modelManager = ModelManager.shared
     let pickerData = [1,2,3,4,5,6,7,8,9,10]
     
     var toolBar = UIToolbar()

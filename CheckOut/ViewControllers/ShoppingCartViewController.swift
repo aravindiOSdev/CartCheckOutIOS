@@ -10,8 +10,8 @@ import UIKit
 
 class ShoppingCartViewController: UIViewController {
     
-    let cart = CartManager.cart
-    let modelManager = ModelManager.data
+    let cart = CartManager.shared
+    let modelManager = ModelManager.shared
     
     @IBOutlet weak var bannerCollectionView: UICollectionView!
     @IBOutlet weak var bannerPageControl: UIPageControl!
