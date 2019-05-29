@@ -14,19 +14,44 @@ class PurchaseHistoryViewController: UIViewController {
     let modelManager = ModelManager.shared
     var purchases: [Purchase] = []
     var selectedPurchase: Purchase?
-    
+    var vSpinner : UIView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
     override func viewWillAppear(_ animated: Bool) {
+        showSpinner(onView: self.view)
         modelManager.fetchAllPurchases{ (purchases, error) in
-            print(purchases ?? "")
             self.purchases = purchases ?? []
+            self.removeSpinner()
             self.purchaseTableView.reloadData()
             
         }
     }
+    
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init()
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            self.vSpinner?.removeFromSuperview()
+            self.vSpinner = nil
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let checkoutCartViewController = segue.destination as! CheckoutCartViewController
         

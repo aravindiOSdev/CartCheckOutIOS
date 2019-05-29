@@ -23,6 +23,7 @@ class ModelManager{
     let fakeToken = "9E53496E-157C-4BB2-A49C-FBA77C5675D6"
     
     private init(){
+        print("I'm Borned")
         AuthenticationManager.shared.authenticate { (authResponse) in
             self.token = authResponse.token
         }
@@ -63,13 +64,14 @@ class ModelManager{
 
     func fetchAllPurchases(completion: @escaping ([Purchase]?, Error?) -> Void) {
         let url = URL(string: baseUrl + "/purchases")!
-        if self.token == nil {
+        if (self.token == nil) {
             let errorTemp = NSError(domain:"", code: -1, userInfo:nil)
             completion(nil, errorTemp);
             return
         }
         let headers: HTTPHeaders = ["Authorization": "Bearer " + self.fakeToken]
-        
+        print(token!)
+
         Alamofire.request(url,method: .get, headers: headers)
             .validate().responseArray{(response: DataResponse<[Purchase]>) in
                 switch response.result {
@@ -88,6 +90,7 @@ class ModelManager{
             completion(nil, errorTemp);
             return
         }
+        print(token!)
         var params = Parameters()
         params.updateValue(CartManager.shared.toPurchaseLinePost().toJSON(), forKey: "cart")
         let headers: HTTPHeaders = ["Authorization": "Bearer " + self.fakeToken]

@@ -24,30 +24,6 @@ class CheckoutCartViewController: UIViewController {
     var cart: [Int:Int] = [:]
     var vSpinner : UIView?
     
-
-    func showSpinner(onView : UIView) {
-        let spinnerView = UIView.init(frame: onView.bounds)
-        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let ai = UIActivityIndicatorView.init()
-        ai.startAnimating()
-        ai.center = spinnerView.center
-        
-        DispatchQueue.main.async {
-            spinnerView.addSubview(ai)
-            onView.addSubview(spinnerView)
-        }
-        
-        vSpinner = spinnerView
-    }
-    
-    func removeSpinner() {
-        DispatchQueue.main.async {
-            self.vSpinner?.removeFromSuperview()
-            self.vSpinner = nil
-        }
-    }
-
-    
     @IBOutlet weak var totalAmountLabel: UILabel!
     @IBOutlet weak var checkoutButton: UIButton!
     @IBOutlet weak var qtyPicker: UIPickerView!
@@ -83,7 +59,28 @@ class CheckoutCartViewController: UIViewController {
         }
         refreshAmount()
     }
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init()
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
     
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            self.vSpinner?.removeFromSuperview()
+            self.vSpinner = nil
+        }
+    }
+
     @IBAction func checkoutButtonTapped(_ sender: Any) {
         showSpinner(onView: self.view)
         modelManager.postPurchase(){ (message, error) in
