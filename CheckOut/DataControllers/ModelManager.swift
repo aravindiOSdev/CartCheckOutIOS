@@ -114,10 +114,11 @@ class ModelManager{
             switch response.result {
             case .success:
                 print(response.value)
+                completion(response.value,nil)
                 
                 break
             case .failure(let error):
-                
+                completion(nil,error)
                 print(error)
             }
         }

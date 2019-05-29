@@ -39,11 +39,6 @@ class CheckoutCartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        modelManager.postPurchase{ (purchase, error) in
-            print(purchase)
-            print(purchase)
-            
-        }
         if(readOnly){
             checkoutButton.isHidden = true
         }
@@ -66,10 +61,14 @@ class CheckoutCartViewController: UIViewController {
     
     @IBAction func checkoutButtonTapped(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Susccesfuly Checkout", message: "We have send the reciept to your email address", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: checkoutDone)
-        alert.addAction(action)
-        self.present(alert, animated: true)
+        modelManager.postPurchase(){ (okMessage, error) in
+            if let okMessage = okMessage {
+                let alert = UIAlertController(title: "Susccesfuly Checkout", message: okMessage, preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default, handler: self.checkoutDone)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+            }
+        }
     }
     
     func checkoutDone(alert: UIAlertAction){

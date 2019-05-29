@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/ViewControllers/ShoppingCartViewController.swift"
-            timestampString = "580783747.581935"
+            timestampString = "580785273.081008"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "109"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/ViewControllers/ShoppingCartViewController.swift"
-            timestampString = "580783747.582058"
+            timestampString = "580785273.081108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "112"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/ViewControllers/PurchaseHistoryViewController.swift"
-            timestampString = "580783747.582146"
+            timestampString = "580785273.081195"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580783747.582253"
+            timestampString = "580785273.081302"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580783747.582847"
+            timestampString = "580785273.081866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142">
+            startingLineNumber = "143"
+            endingLineNumber = "143">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580783747.583306"
+            timestampString = "580785273.082233"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142">
+            startingLineNumber = "143"
+            endingLineNumber = "143">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -102,7 +102,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/CartManager.swift"
-            timestampString = "580783747.583661"
+            timestampString = "580785273.082733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
@@ -116,7 +116,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/CartManager.swift"
-            timestampString = "580783747.583738"
+            timestampString = "580785273.082854"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
@@ -130,11 +130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580783747.5838211"
+            timestampString = "580785273.082945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142">
+            startingLineNumber = "143"
+            endingLineNumber = "143">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -144,11 +144,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580783747.584123"
+            timestampString = "580785273.083348"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142">
+            startingLineNumber = "143"
+            endingLineNumber = "143">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -158,28 +158,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CheckOut/ViewControllers/CheckoutCartViewController.swift"
-            timestampString = "580783747.584404"
+            timestampString = "580785273.083634"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CheckOut/DataControllers/ModelManager.swift"
-            timestampString = "580783747.584464"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "postPurchase(completion:)"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "checkoutButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
