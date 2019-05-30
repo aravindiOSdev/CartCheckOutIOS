@@ -12,7 +12,6 @@ class AuthenticationResponse {
     var token: String
     
     init(token: String) {
-        print(token)
         self.token = token
     }
 }

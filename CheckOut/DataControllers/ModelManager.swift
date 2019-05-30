@@ -4,7 +4,7 @@
 //
 //  Created by SCIS on 5/4/19.
 //  Copyright © 2019 Jartola. All rights reserved.
-//
+//9E53496E-157C-4BB2-A49C-FBA77C5675DF
 
 import Foundation
 import Alamofire
@@ -25,7 +25,8 @@ class ModelManager{
     private init(){
         print("I'm Borned")
         AuthenticationManager.shared.authenticate { (authResponse) in
-            self.token = authResponse.token
+            //self.token = authResponse.token
+            self.token = self.fakeToken
         }
     }
     
@@ -69,8 +70,7 @@ class ModelManager{
             completion(nil, errorTemp);
             return
         }
-        let headers: HTTPHeaders = ["Authorization": "Bearer " + self.fakeToken]
-        print(token!)
+        let headers: HTTPHeaders = ["Authorization": "Bearer " + self.token!]
 
         Alamofire.request(url,method: .get, headers: headers)
             .validate().responseArray{(response: DataResponse<[Purchase]>) in
@@ -90,10 +90,10 @@ class ModelManager{
             completion(nil, errorTemp);
             return
         }
-        print(token!)
+        print(self.token!)
         var params = Parameters()
         params.updateValue(CartManager.shared.toPurchaseLinePost().toJSON(), forKey: "cart")
-        let headers: HTTPHeaders = ["Authorization": "Bearer " + self.fakeToken]
+        let headers: HTTPHeaders = ["Authorization": "Bearer " + self.token!]
         
         Alamofire.request(url, method: .post, parameters: params,encoding: JSONEncoding.default, headers: headers).responseString {
             response in
@@ -106,12 +106,6 @@ class ModelManager{
         }
         
     }
-
-    
-    
-    
-    
-
 
     private func addItemsById(items: [Item]){
         for item in items{

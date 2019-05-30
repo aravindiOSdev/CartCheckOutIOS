@@ -8,11 +8,25 @@
 
 import UIKit
 
+protocol PurchaseDetailDelegate{
+    
+    func didTapDetailsButton(indexPath: IndexPath)
+}
+
 class PurchaseViewCell: UITableViewCell {
     
+    @IBOutlet weak var detailButton: UIButton!
     @IBOutlet weak var purchaseDateLabel: UILabel!
     @IBOutlet weak var purchaseTotalAmountLabel: UILabel!
     var purchase: Purchase!
+    var delegate: PurchaseDetailDelegate?
+    var indexPath: IndexPath!
+    
+    @IBAction func didTapDetailsButton(_ sender: Any) {
+        delegate?.didTapDetailsButton(indexPath: indexPath)
+    }
+    
+    
     
     func setPurchase(purchase: Purchase){
         self.purchase = purchase
@@ -29,6 +43,14 @@ class PurchaseViewCell: UITableViewCell {
 
         purchaseDateLabel.text = formatter.string(from: purchase.date!)
         purchaseTotalAmountLabel.text = "$"+String(purchase.amount())
+        
+        
+        detailButton.layer.cornerRadius = 20
+        detailButton.clipsToBounds = true
+        detailButton.layer.borderWidth = 1
+        detailButton.layer.borderColor = UIColor.purple.cgColor
+        detailButton.backgroundColor = UIColor.white
+        detailButton.tintColor = UIColor.purple
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

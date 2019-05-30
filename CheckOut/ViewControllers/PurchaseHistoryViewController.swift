@@ -15,6 +15,7 @@ class PurchaseHistoryViewController: UIViewController {
     var purchases: [Purchase] = []
     var selectedPurchase: Purchase?
     var vSpinner : UIView?
+    var selectedIndexPath: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,7 @@ class PurchaseHistoryViewController: UIViewController {
         let checkoutCartViewController = segue.destination as! CheckoutCartViewController
         
         checkoutCartViewController.readOnly = true
-        checkoutCartViewController.purchaseCart = purchases[(purchaseTableView.indexPathForSelectedRow?.row)!].convertToCart()
+        checkoutCartViewController.purchaseCart = purchases[selectedIndexPath!.row].convertToCart()
     }
 }
 
@@ -68,10 +69,19 @@ extension PurchaseHistoryViewController: UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "purchaseCell", for: indexPath) as! PurchaseViewCell
         cell.setPurchase(purchase: purchases[indexPath.row])
+        cell.delegate = self
+        cell.indexPath = indexPath
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedPurchase = self.purchases[indexPath.row]
     }
     
+}
+
+extension PurchaseHistoryViewController: PurchaseDetailDelegate {
+    func didTapDetailsButton(indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        self.performSegue(withIdentifier: "detailPurchase", sender: self)
+    }
 }
