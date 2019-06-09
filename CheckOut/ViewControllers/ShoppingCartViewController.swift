@@ -29,6 +29,10 @@ class ShoppingCartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if(modelManager.items.isEmpty)
+        {
+            handleFetchData(alert: UIAlertAction())
+        }
         itemTableView.reloadData()
     }
     
@@ -42,7 +46,9 @@ class ShoppingCartViewController: UIViewController {
             if (error != nil){
                 let alert = UIAlertController(title: "We could not conect to the server", message: "Are you Online?", preferredStyle: .alert)
                 let action = UIAlertAction(title: "Re-try", style: .default, handler: self.handleFetchData)
+                let action2 = UIAlertAction(title: "Cancel", style: .cancel)
                 alert.addAction(action)
+                alert.addAction(action2)
                 self.present(alert, animated: true)
                 return
                 }
@@ -117,9 +123,7 @@ extension ShoppingCartViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemShoppingCartCell
   
-        //let item: Item = actualItemsBySection[indexPath.section]![indexPath.row]
         let itemNew: Item = actualItemsBySection[indexPath.section]![indexPath.row]
-        //cell.setItem(item: item)
         cell.setItemNew(item: itemNew)
         
         if let stock = cart.value[itemNew.id!]{
