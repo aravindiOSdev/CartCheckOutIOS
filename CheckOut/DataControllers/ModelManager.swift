@@ -97,12 +97,12 @@ class ModelManager{
         
         Alamofire.request(url, method: .post, parameters: params,encoding: JSONEncoding.default, headers: headers).responseString {
             response in
-            switch response.result {
-            case .success:
-                completion(response.value,nil)
-            case .failure(let error):
-                completion(nil,error)
-            }
+                switch response.result {
+                case .success:
+                    completion(response.value,nil)
+                case .failure(let error):
+                    completion(nil,error)
+                }
         }
         
     }

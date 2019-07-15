@@ -23,7 +23,6 @@ class ShoppingCartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        handleFetchData(alert: UIAlertAction())
         bannerPageControl.currentPage = 0
     }
     
