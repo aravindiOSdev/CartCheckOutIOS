@@ -18,3 +18,8 @@ Pantalla principalContiene:
 Por defecto todas las celdas del listadotendrán el botón de "Add" visible. Si hay unao más unidades seleccionadas del mismoartículo, se ocultará el botón y se regulará lacantidad de unidades con los botones de "+"y "-".
 Pantalla de checkoutEn ella se podrán visualizar los elementosque se encuentran en el carrito decompras antes de confirmarlo. Si no hayelementos en el carrito el botón decheckout debe estar deshabilitado.Es importante que independientementedel dispositivo donde se corra laaplicación siempre debe haber dos itemsfor fila.Si el usuario toca un item se debedesplegar un picker donde puedemodificar la cantidad de unidades.Una vez que el usuario presiona"Checkout" deberá desplegarse un alertque le indique al usuario que la comprafue realizada exitosamente, navegar a lapantalla principal y vaciar el carrito decompras.
 Criterio de evaluación.El proyecto debe correr en cualquier dispositivo con iOS 10.0 en adelante y no es necesariosoportar modo landscape (rotar la pantalla).
+
+
+![alt text](https://github.com/joartola/CartCheckOutIOS/edit/master/cart.png)
+
+![alt text](https://github.com/joartola/CartCheckOutIOS/edit/master/checkout.png)
